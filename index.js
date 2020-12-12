@@ -45,14 +45,15 @@ let createTimeOutEvent=function(dateStamp){
 };
 
 let hoursWorkedOnDate = function(date){
-  let inEvent=this.timeInEvents.find()
-}
+  let inEvent=this.timeInEvents.find((e)=>e.date===date);
+  let outEvent=this.timeOutEvents.find((e)=>e.date===date);
+  return (outEvent.hour-inEvent.hour)/100;
+};
 
-
-
-
-
-
+let wagesEarnedOnDate=function(date){
+  let rawWage=hoursWorkedOnDate.call(this,date)*this.payPerHour;
+  return parseFloat(rawWage.toString());
+};
 
 let allWagesFor = function () {
     let eligibleDates = this.timeInEvents.map(function (e) {
@@ -65,3 +66,11 @@ let allWagesFor = function () {
 
     return payable
 }
+
+let findEmployeeByFirstName=function(srcArray,firstName){
+  return srcArray.find((rec)=>rec.firstName===firstName);
+};
+
+let calculatePayroll=function(arrayOfEmployee){
+  return arrayOfEmployee.reduce((memo,rec)=>memo+allWagesFor.call(rec),0);
+};
